@@ -51,24 +51,13 @@ void listPorts() {
 	delete midiIn;
 }
 
-void parseInputs(int argc, char* argv[]) {
-	char listArg[] = "-l";
-	for(int i = 1; i < argc; i++) {
-		if(strcmp(listArg, argv[i]) == 0) {
-			listPorts();
-			exit(EXIT_SUCCESS);
-		}
-	}
-	cout << endl;
-}
-
 int main(int argc, char* argv[]) {
 	vector<MidiInput*> inputs;
 	vector<int> portList;
 	vector<int>::iterator portIterator;
 	vector<MidiInput*>::iterator inputIterator;
-
-	parseInputs(argc, argv);
+	
+	listPorts();
 	portList = selectPorts();
 
 	for (portIterator = portList.begin(); portIterator < portList.end(); portIterator++) {
