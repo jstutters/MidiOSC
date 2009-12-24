@@ -59,6 +59,10 @@ int main(int argc, char* argv[]) {
 	
 	listPorts();
 	portList = selectPorts();
+	
+	if(portList.size() == 0) {
+		exit(EXIT_SUCCESS);
+	}
 
 	for (portIterator = portList.begin(); portIterator < portList.end(); portIterator++) {
 		*portIterator -= 1;
