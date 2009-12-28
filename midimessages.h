@@ -1,3 +1,4 @@
+#pragma once
 //status bytes
 const unsigned char NOTE_OFF = 0x80;
 const unsigned char NOTE_ON = 0x90;

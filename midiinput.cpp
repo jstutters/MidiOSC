@@ -155,7 +155,7 @@ void MidiInput::onMidi(double deltatime, vector<unsigned char> *message, void *u
 		lo_message_add_int32(m, (int)message->at(j + 1));
 	}
 
-	lo_address t = lo_address_new(NULL, "7001");
+	lo_address t = lo_address_new("239.0.0.1", "7001");
 	stringstream path;
 	path << "/midi/" << *name;
 	if(bytes > 0) {
