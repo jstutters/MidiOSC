@@ -1,4 +1,4 @@
 *.o
-*.*~
+*~
 midiosc
 .sconsign.dblite

@@ -1,20 +1,50 @@
+// Copyright (C) 2010 Jonny Stutters
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
 #include "midiinput.h"
 
 using namespace std;
 
-MidiInput::MidiInput(int p) {
+MidiInput::MidiInput(int p, int op) {
 	try {
 	    midiIn = new RtMidiIn();
 	} catch(RtError &error) {
 		error.printMessage();
 	}
+	
+	string portName;
+	string* outputPort;
+	
+	stringstream ss;
+	ss << op;
+	outputPort = new string(ss.str());
+	
 	midiIn->openPort(p);
 	portName = midiIn->getPortName(p);
 	stringReplace(&portName, '_');
-    midiIn->setCallback(onMidi, &portName);
+	
+	threadData.portName = portName;
+	threadData.outputPort = *outputPort;
+    
+    midiIn->setCallback(onMidi, &threadData);
 	//respond to sysex and timing, ignore active sensing
     midiIn->ignoreTypes(false, false, true);
 	cout << "Listening to port " << midiIn->getPortName(p) << endl;
+	
+	
 }
 
 MidiInput::~MidiInput() {
@@ -46,7 +76,7 @@ void MidiInput::onMidi(double deltatime, vector<unsigned char> *message, void *u
 		status = message->at(0);
 	}
 	
-	string *name = static_cast<string*>(userData);
+	MidiThreadData *data = static_cast<MidiThreadData*>(userData);
 	switch(status) {
 		case NOTE_OFF:
 		message_type = "note_off";
@@ -155,9 +185,9 @@ void MidiInput::onMidi(double deltatime, vector<unsigned char> *message, void *u
 		lo_message_add_int32(m, (int)message->at(j + 1));
 	}
 
-	lo_address t = lo_address_new("239.0.0.1", "7001");
+	lo_address t = lo_address_new("239.0.0.1", data->outputPort.c_str());
 	stringstream path;
-	path << "/midi/" << *name;
+	path << "/midi/" << data->portName;
 	if(bytes > 0) {
 		path << "/" << (int)channel;
 	}

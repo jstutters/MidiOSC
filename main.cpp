@@ -1,3 +1,19 @@
+// Copyright (C) 2010 Jonny Stutters
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
@@ -7,6 +23,7 @@
 #include <vector>
 #include "RtMidi.h"
 #include "midiinput.h"
+#include "options.h"
 
 #include "lo/lo.h"
 
@@ -105,6 +122,10 @@ map<string, int> populateMap() {
 	return stringToStatus;
 }
 
+void stringReplace(string* str) {
+	replace_if(str->begin(), str->end(), bind2nd(equal_to<char>(), '_'), ' ');
+}
+
 int generic_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data) {
 	vector<unsigned char> msg;
 	map<string, RtMidiOut*>::iterator it;
@@ -126,10 +147,11 @@ int generic_handler(const char *path, const char *types, lo_arg **argv, int argc
 	int status = stringToStatus[&argv[0]->s] + channel;
 	msg.push_back((unsigned char)status);
 	for(int i = 1; i < argc; i++) {
-		cout << argv[i]->i << endl;
 		msg.push_back((unsigned char)argv[i]->i);
 	}
-		
+	
+	stringReplace(&pathTokenized[1]);
+	
 	map<string, RtMidiOut*> *m = (map<string, RtMidiOut*>*)user_data;
 	it = m->find(pathTokenized[1]);
 	RtMidiOut* midi = it->second;
@@ -143,12 +165,15 @@ int main(int argc, char* argv[]) {
 	vector<int>::iterator portIterator;
 	vector<MidiInput*>::iterator inputIterator;
 	
+	Options *opt = new Options();
+	opt->processArguments(argc, argv);
+	
 	listInputPorts();
 	portList = selectPorts();
 
 	for (portIterator = portList.begin(); portIterator < portList.end(); portIterator++) {
 		*portIterator -= 1;
-		MidiInput* m  = new MidiInput(*portIterator);
+		MidiInput* m  = new MidiInput(*portIterator, opt->outputPort);
 		inputs.push_back(m);
 	}
 	
@@ -165,9 +190,14 @@ int main(int argc, char* argv[]) {
 		portMap[midiOut->getPortName(*portIterator)] = p;
 	}
 	
-	lo_server_thread st = lo_server_thread_new("8000", error);
+	stringstream ss;
+	ss << opt->inputPort;
+	
+	lo_server_thread st = lo_server_thread_new(ss.str().c_str(), error);
 	lo_server_thread_add_method(st, NULL, NULL, generic_handler, &portMap);
 	lo_server_thread_start(st);
+	
+	delete opt;
 	
     cout << "\nReading MIDI input ... press <enter> to quit.\n";
     char input;

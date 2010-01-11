@@ -13,4 +13,4 @@ else:
     )
     libs.append(['asound', 'pthread'])
 
-env.Program('midiosc', ['main.cpp', 'midiinput.cpp', 'RtMidi.cpp'], LIBS=libs)
+env.Program('midiosc', ['main.cpp', 'midiinput.cpp', 'RtMidi.cpp', 'anyoption.cpp', 'options.cpp'], LIBS=libs)
