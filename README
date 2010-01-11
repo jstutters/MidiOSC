@@ -1,0 +1,103 @@
+MidiOSC : (C) 2010 Jonny Stutters : jstutters@jeremah.co.uk : jeremah.co.uk
+
+MidiOSC is a small program to bridge the worlds of MIDI and OSC by providing bidirectional conversion of MIDI to OSC.  Released under the GPLv2 license.
+
+
+Building MidiOSC
+================
+
+MidiOSC is not currently distributed as a binary for any platform so you will need to build it from source.  MidiOSC is known to build successfully on OSX 10.5 and Ubuntu 9.10.
+
+Dependencies
+------------
+
+MidiOSC depends on the liblo OSC library (liblo.sourceforge.net).  Liblo is available through the packaging system of many Linux distributions and is known to compile on OSX.  Before attempting to compile MidiOSC you should ensure that the liblo library and headers are in the appropriate location for your system (/usr/lib and /usr/include usually)
+
+Compiling
+---------
+
+Unpack the MidiOSC sourcecode the in a terminal change to the newly created directory.  Run the command "scons".  If compilation is successful you should see "scons: done building targets." in the output.
+
+Installation
+------------
+
+MidiOSC does not need to be installed, for easy access you may prefer to move the midiosc binary to somewhere in your systems path (e.g. /usr/local/bin).
+
+
+Using MidiOSC
+=============
+
+Starting up
+-----------
+
+Start MidiOSC by typing "midiosc" (assuming the MidiOSC binary is somewhere in your path).  You will be asked to select the MIDI ports that you want to open for input and output (for multiple ports enter a space separated list).  After the ports have been selected MidiOSC will begin to listen for MIDI and OSC input.  The IP addresses and ports can be changed when starting MidiOSC, enter "midiosc --help" for more details.  By default MidiOSC sends on 239.0.0.1:8000 and listens on 127.0.0.1:7001.
+
+Example
+-------
+
+An example Python program is included with MidiOSC, see example.py.
+
+MIDI input
+----------
+
+When MidiOSC receives MIDI input it will generate an OSC message with the address:
+/midi/[Device name]/[Channel]
+
+Note that:
+- the channel will be omitted from global MIDI messages (e.g. timing pulses)
+- any spaces in the device name will be replaced by underscores
+
+The OSC message will have the a string argument indicating the type of MIDI message (e.g. note on, control change) and a number of integer arguments appropriate to the type of MIDI message (e.g. note number and velocity for a note on message).  See the tables below to see the message type strings used and the number of integer arguments that will be generated.  MidiOSC uses the multicast IP address 239.0.0.1 for received messages, this allow multiple programs to listen to MidiOSC.
+
+MIDI output
+-----------
+
+To generate a MIDI message, send MidiOSC an OSC message.  MidiOSC expects input of the same type of OSC messages that it sends.  At the moment MidiOSC is not strict about input parameters, users should ensure that they provide appropriate types of data (e.g. a note on message should have two integer arguments in addition to the message type argument.  MidiOSC does not currently support output of sysex MMC messages.
+
+Supported message types
+-----------------------
+
+### Normal messages
+
+Message type		MIDI byte	Arguments
+
+note_off			0x80		2
+note_on				0x90		2
+key_pressure		0xa0		2
+controller_change	0xb0		2
+program_change		0xc0		2
+channel_pressure	0xd0		2
+pitch_bend			0xe0		2
+song_position		0xf2		2
+song_select			0xf3		2
+tune_request		0xf6		2
+timing_tick			0xf8		0
+start_song			0xfa		0
+continue_song		0xfb		0
+stop_song			0xfc		0
+
+### Sysex messages (input only)
+
+Message type		MIDI byte
+
+mmc_stop			0x01
+mmc_play			0x02
+mmc_fast_forward	0x04
+mmc_rewind			0x05
+mmc_record			0x06
+mmc_pause			0x09
+
+
+Need help?
+==========
+
+If you find any problems with MidiOSC please drop me an email to the address at the top of this file and I'll see what I can do to sort it out.
+
+
+Thanks
+======
+
+MidiOSC was made possible by:
+- the liblo library from Steve Harris and Stephen Sinclair (http://liblo.sourceforge.net)
+- the RtMidi classes from Gary P. Scavone (http://www.music.mcgill.ca/~gary/rtmidi)
+- the AnyOption class by Kishan Thomas (http://www.hackorama.com/anyoption)
