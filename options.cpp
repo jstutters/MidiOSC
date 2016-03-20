@@ -16,6 +16,7 @@
 
 #include <cstdlib>
 #include "options.h"
+#define VERSION "1.1"
 
 using namespace std;
 
@@ -26,10 +27,12 @@ Options::Options() {
     this->opt->addUsage(" -h  --help         Prints this help");
     this->opt->addUsage(" -i  --input-port   Sets the port to listen for OSC messages on");
     this->opt->addUsage(" -o  --output-port  Sets the port to send OSC messages on");
+    this->opt->addUsage(" -v  --version      Print the version number");
 
     this->opt->setFlag("help", 'h');
     this->opt->setOption("input-port", 'i');
     this->opt->setOption("output-port", 'o');
+    this->opt->setFlag("version", 'v');
 }
 
 Options::~Options() {
@@ -40,6 +43,12 @@ void Options::processArguments(int argc, char* argv[]) {
 	this->opt->processCommandArgs(argc, argv);
     if(this->opt->getFlag("help") || this->opt->getFlag('h')) {
         this->opt->printUsage();
+        exit(0);
+    }
+    
+    if(this->opt->getFlag("version") || this->opt->getFlag('v')) {
+        cout << "Version " << VERSION << endl;
+        exit(0);
     }
   
     if(this->opt->getValue("input-port") != NULL || this->opt->getValue("input-port") != NULL) {
