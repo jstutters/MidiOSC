@@ -25,7 +25,7 @@ class Options {
 	public:
 		Options();
 		~Options();
-		int processArguments(int, char**);
+		void processArguments(int, char**);
 		int inputPort, outputPort;
 };
-	
+

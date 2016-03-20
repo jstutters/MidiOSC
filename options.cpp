@@ -35,25 +35,25 @@ Options::~Options() {
 	delete this->opt;
 }
 
-int Options::processArguments(int argc, char* argv[]) {
+void Options::processArguments(int argc, char* argv[]) {
 	this->opt->processCommandArgs(argc, argv);
-  if(this->opt->getFlag("help") || this->opt->getFlag('h')) {
-      this->opt->printUsage();
-  };
+    if(this->opt->getFlag("help") || this->opt->getFlag('h')) {
+        this->opt->printUsage();
+    }
   
-  if(this->opt->getValue("input-port") != NULL || this->opt->getValue("input-port") != NULL) {
-      stringstream ss(stringstream::in | stringstream::out);
-      ss << this->opt->getValue('i');
-      ss >> this->inputPort;
-  } else {
-  	this->inputPort = 8000;
-  }
+    if(this->opt->getValue("input-port") != NULL || this->opt->getValue("input-port") != NULL) {
+        stringstream ss(stringstream::in | stringstream::out);
+        ss << this->opt->getValue('i');
+        ss >> this->inputPort;
+    } else {
+    	this->inputPort = 8000;
+    }
   
-  if(this->opt->getValue("output-port") != NULL || this->opt->getValue("output-port") != NULL) {
-      stringstream ss(stringstream::in | stringstream::out);
-      ss << this->opt->getValue('o');
-      ss >> this->outputPort;
-  } else {
-  	this->outputPort = 7001;
-  }
+    if(this->opt->getValue("output-port") != NULL || this->opt->getValue("output-port") != NULL) {
+        stringstream ss(stringstream::in | stringstream::out);
+        ss << this->opt->getValue('o');
+        ss >> this->outputPort;
+    } else {
+        this->outputPort = 7001;
+    }
 }
