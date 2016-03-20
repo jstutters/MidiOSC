@@ -11,7 +11,7 @@ except liblo.AddressError, err:
     sys.exit()
     
 # change the device name to something appropriate for your system
-device_name = "midi_device"
+device_name = "IAC Driver Bus 1".replace(' ', '_')
 osc_address = "/midi/" + device_name + "/0"
 
 # send a note on with note number 60 and velocity 100
