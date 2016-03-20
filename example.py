@@ -5,7 +5,7 @@ import liblo, sys
 
 # set the target address where MidiOSC will be listening (assumes the default port is used)
 try:
-    midiosc = liblo.address("239.0.0.1", 8000)
+    midiosc = liblo.Address("localhost", 8000)
 except liblo.AddressError, err:
     print str(err)
     sys.exit()
