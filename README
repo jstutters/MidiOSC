@@ -9,7 +9,7 @@ Building MidiOSC
 
 MidiOSC is not currently distributed as a binary for any platform so you will
 need to build it from source.  MidiOSC is known to build successfully on OSX
-10.5 and Ubuntu 9.10.
+10.5-10.11 and Ubuntu 9.10.
 
 Dependencies
 ------------
@@ -45,8 +45,8 @@ your path).  You will be asked to select the MIDI ports that you want to open
 for input and output (for multiple ports enter a space separated list).  After
 the ports have been selected MidiOSC will begin to listen for MIDI and OSC
 input.  The IP addresses and ports can be changed when starting MidiOSC, enter
-"midiosc --help" for more details.  By default MidiOSC sends on 239.0.0.1:8000
-and listens on 127.0.0.1:7001.
+"midiosc --help" for more details.  By default MidiOSC sends to localhost:8000
+and listens on port 7001.
 
 Example
 -------
@@ -67,9 +67,7 @@ The OSC message will have the a string argument indicating the type of MIDI
 message (e.g. note on, control change) and a number of integer arguments
 appropriate to the type of MIDI message (e.g. note number and velocity for a
 note on message).  See the tables below to see the message type strings used
-and the number of integer arguments that will be generated.  MidiOSC uses the
-multicast IP address 239.0.0.1 for received messages, this allow multiple
-programs to listen to MidiOSC.
+and the number of integer arguments that will be generated.
 
 MIDI output
 -----------
