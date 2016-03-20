@@ -21,7 +21,7 @@ using namespace std;
 MidiInput::MidiInput(int p, int op) {
 	try {
 	    midiIn = new RtMidiIn();
-	} catch(RtError &error) {
+	} catch(RtMidiError &error) {
 		error.printMessage();
 	}
 	
@@ -63,7 +63,7 @@ void MidiInput::onMidi(double deltatime, vector<unsigned char> *message, void *u
 	
 	try {
     	nBytes = message->size();
-	} catch(RtError &error) {
+	} catch(RtMidiError &error) {
 		error.printMessage();
 		exit(EXIT_FAILURE);
 	}
