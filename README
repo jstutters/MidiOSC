@@ -1,4 +1,4 @@
-MidiOSC : (C) 2010 Jonny Stutters : jstutters@jeremah.co.uk : jeremah.co.uk
+MidiOSC : (C) 2016 Jonny Stutters : jstutters@jeremah.co.uk : jeremah.co.uk
 
 MidiOSC is a small program to bridge the worlds of MIDI and OSC by providing
 bidirectional conversion of MIDI to OSC.  Released under the GPLv2 license.
