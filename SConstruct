@@ -9,7 +9,7 @@ if sys.platform == 'darwin':
     )
 else:
     env = Environment(
-        CCFLAGS = '-D__LINUX_ALSASEQ__'
+        CCFLAGS = '-D__LINUX_ALSA__'
     )
     libs.append(['asound', 'pthread'])
 

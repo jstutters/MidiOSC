@@ -231,7 +231,7 @@ RtMidiOut :: ~RtMidiOut() throw()
 //*********************************************************************//
 
 MidiApi :: MidiApi( void )
-  : apiData_( 0 ), connected_( false ), errorCallback_(0), errorCallbackUserData_(0)
+  : apiData_( 0 ), connected_( false ), errorCallback_(0), firstErrorOccurred_(false), errorCallbackUserData_(0)
 {
 }
 
@@ -577,7 +577,9 @@ void MidiInCore :: initialize( const std::string& clientName )
   CFStringRef name = CFStringCreateWithCString( NULL, clientName.c_str(), kCFStringEncodingASCII );
   OSStatus result = MIDIClientCreate(name, NULL, NULL, &client );
   if ( result != noErr ) {
-    errorString_ = "MidiInCore::initialize: error creating OS-X MIDI client object.";
+    std::ostringstream ost;
+    ost << "MidiInCore::initialize: error creating OS-X MIDI client object (" << result << ").";
+    errorString_ = ost.str();
     error( RtMidiError::DRIVER_ERROR, errorString_ );
     return;
   }
@@ -872,7 +874,9 @@ void MidiOutCore :: initialize( const std::string& clientName )
   CFStringRef name = CFStringCreateWithCString( NULL, clientName.c_str(), kCFStringEncodingASCII );
   OSStatus result = MIDIClientCreate(name, NULL, NULL, &client );
   if ( result != noErr ) {
-    errorString_ = "MidiOutCore::initialize: error creating OS-X MIDI client object.";
+    std::ostringstream ost;
+    ost << "MidiInCore::initialize: error creating OS-X MIDI client object (" << result << ").";
+    errorString_ = ost.str();
     error( RtMidiError::DRIVER_ERROR, errorString_ );
     return;
   }
