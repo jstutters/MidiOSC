@@ -7,6 +7,7 @@ if sys.platform == 'darwin':
         FRAMEWORKS = ['CoreMidi', 'CoreAudio', 'CoreFoundation'],
         CCFLAGS = '-D__MACOSX_CORE__'
     )
+    env.ParseConfig('pkg-config --cflags --libs liblo')
 else:
     env = Environment(
         CCFLAGS = '-D__LINUX_ALSA__'

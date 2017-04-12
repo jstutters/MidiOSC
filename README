@@ -20,6 +20,16 @@ to compile on OSX.  Before attempting to compile MidiOSC you should ensure that
 the liblo library and headers are in the appropriate location for your system
 (/usr/lib and /usr/include usually)
 
+Due to complexities with MacOS' installation methods, the scons configuration runs
+pkg-config to ensure correct paths. This, as well as liblo itself, can be installed
+via homebrew:
+
+# install homebrew
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
+# install liblo and pkg-config
+brew install pkg-config
+brew install liblo
+
 Compiling
 ---------
 
