@@ -29,6 +29,8 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 # install liblo and pkg-config
 brew install pkg-config
 brew install liblo
+# if not already installed, build scons
+brew install scons
 
 Compiling
 ---------
