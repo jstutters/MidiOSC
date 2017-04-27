@@ -1,0 +1,3 @@
+language: cpp
+install: apt install liblo-dev
+script: scons
