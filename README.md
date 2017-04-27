@@ -5,7 +5,7 @@ bidirectional conversion of MIDI to OSC.  Released under the GPLv2 license.
 
 
 Building MidiOSC
-================
+----------------
 
 MidiOSC is not currently distributed as a binary for any platform so you will
 need to build it from source.  MidiOSC is known to build successfully on OSX
@@ -24,13 +24,15 @@ Due to complexities with MacOS' installation methods, the scons configuration ru
 pkg-config to ensure correct paths. This, as well as liblo itself, can be installed
 via homebrew:
 
-# install homebrew
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
-# install liblo and pkg-config
-brew install pkg-config
-brew install liblo
-# if not already installed, build scons
-brew install scons
+    # install homebrew
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
+
+    # install liblo and pkg-config
+    brew install pkg-config
+    brew install liblo
+
+    # if not already installed, build scons
+    brew install scons
 
 Compiling
 ---------
@@ -96,40 +98,48 @@ Supported message types
 
 ### Normal messages
 
-Message type		MIDI byte	Arguments
+    Message type        MIDI byte   Arguments
 
-note_off			0x80		2
-note_on				0x90		2
-key_pressure		0xa0		2
-controller_change	0xb0		2
-program_change		0xc0		2
-channel_pressure	0xd0		2
-pitch_bend			0xe0		2
-song_position		0xf2		2
-song_select			0xf3		2
-tune_request		0xf6		2
-timing_tick			0xf8		0
-start_song			0xfa		0
-continue_song		0xfb		0
-stop_song			0xfc		0
+    note_off            0x80        2
+    note_on             0x90        2
+    key_pressure        0xa0        2
+    controller_change   0xb0        2
+    program_change      0xc0        2
+    channel_pressure    0xd0        2
+    pitch_bend          0xe0        2
+    song_position       0xf2        2
+    song_select         0xf3        2
+    tune_request        0xf6        2
+    timing_tick         0xf8        0
+    start_song          0xfa        0
+    continue_song       0xfb        0
+    stop_song           0xfc        0
 
 ### Sysex messages (input only)
 
-Message type		MIDI byte
+    Message type        MIDI byte
 
-mmc_stop			0x01
-mmc_play			0x02
-mmc_fast_forward	0x04
-mmc_rewind			0x05
-mmc_record			0x06
-mmc_pause			0x09
+    mmc_stop            0x01
+    mmc_play            0x02
+    mmc_fast_forward    0x04
+    mmc_rewind          0x05
+    mmc_record          0x06
+    mmc_pause           0x09
 
 
 Need help?
 ==========
 
 If you find any problems with MidiOSC please drop me an email to the address at
-the top of this file and I'll see what I can do to sort it out.
+the top of this file and I'll see what I can do to sort it out or create an issue on
+[GitHub](https://github.com/jstutters/MidiOSC/issues).
+
+
+Contributions
+=============
+
+Fixes and improvements to MidiOSC are gratefully received.  Please offer patches for consideration
+via [GitHub](https://github.com/jstutters/MidiOSC/issues).
 
 
 Thanks
@@ -139,3 +149,6 @@ MidiOSC was made possible by:
 - the liblo library from Steve Harris and Stephen Sinclair (http://liblo.sourceforge.net)
 - the RtMidi classes from Gary P. Scavone (http://www.music.mcgill.ca/~gary/rtmidi)
 - the AnyOption class by Kishan Thomas (http://www.hackorama.com/anyoption)
+
+A big thanks to the developers who made contributions:
+- Christian Ashby (https://github.com/cscashby)
