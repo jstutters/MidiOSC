@@ -1,3 +1,5 @@
 language: cpp
-install: apt-get install liblo-dev
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq liblo-dev
 script: scons
