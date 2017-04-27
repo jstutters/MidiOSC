@@ -5,7 +5,7 @@ bidirectional conversion of MIDI to OSC.  Released under the GPLv2 license.
 
 
 Building MidiOSC
-================
+----------------
 
 MidiOSC is not currently distributed as a binary for any platform so you will
 need to build it from source.  MidiOSC is known to build successfully on OSX
@@ -24,13 +24,15 @@ Due to complexities with MacOS' installation methods, the scons configuration ru
 pkg-config to ensure correct paths. This, as well as liblo itself, can be installed
 via homebrew:
 
-# install homebrew
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
-# install liblo and pkg-config
-brew install pkg-config
-brew install liblo
-# if not already installed, build scons
-brew install scons
+    # install homebrew
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
+
+    # install liblo and pkg-config
+    brew install pkg-config
+    brew install liblo
+
+    # if not already installed, build scons
+    brew install scons
 
 Compiling
 ---------
@@ -129,7 +131,15 @@ Need help?
 ==========
 
 If you find any problems with MidiOSC please drop me an email to the address at
-the top of this file and I'll see what I can do to sort it out.
+the top of this file and I'll see what I can do to sort it out or create an issue on
+[GitHub](https://github.com/jstutters/MidiOSC/issues).
+
+
+Contributions
+=============
+
+Fixes and improvements to MidiOSC are gratefully received.  Please offer patches for consideration
+via [GitHub](https://github.com/jstutters/MidiOSC/issues).
 
 
 Thanks
@@ -139,3 +149,6 @@ MidiOSC was made possible by:
 - the liblo library from Steve Harris and Stephen Sinclair (http://liblo.sourceforge.net)
 - the RtMidi classes from Gary P. Scavone (http://www.music.mcgill.ca/~gary/rtmidi)
 - the AnyOption class by Kishan Thomas (http://www.hackorama.com/anyoption)
+
+A big thanks to the developers who made contributions:
+- Christian Ashby (https://github.com/cscashby)
